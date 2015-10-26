@@ -1,4 +1,4 @@
-package com.veskoiliev.asosmini;
+package com.veskoiliev.asosmini.ui.main;
 
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;

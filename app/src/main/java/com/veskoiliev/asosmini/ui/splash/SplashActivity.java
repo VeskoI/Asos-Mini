@@ -1,4 +1,4 @@
-package com.veskoiliev.asosmini.ui;
+package com.veskoiliev.asosmini.ui.splash;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.veskoiliev.asosmini.MainActivity;
+import com.veskoiliev.asosmini.ui.main.MainActivity;
 import com.veskoiliev.asosmini.R;
 
 import butterknife.Bind;

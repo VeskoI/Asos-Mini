@@ -1,18 +1,19 @@
-package com.veskoiliev.asosmini;
+package com.veskoiliev.asosmini.ui.main;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import com.veskoiliev.asosmini.model.Gender;
 import com.veskoiliev.asosmini.model.DataWrapper;
 import com.veskoiliev.asosmini.model.DataWrapperImpl;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
-import com.veskoiliev.asosmini.ui.DataFetchedListener;
+import com.veskoiliev.asosmini.model.DataFetchedListener;
 
 import java.util.List;
 
-import static com.veskoiliev.asosmini.Gender.MEN;
-import static com.veskoiliev.asosmini.Gender.WOMEN;
+import static com.veskoiliev.asosmini.model.Gender.MEN;
+import static com.veskoiliev.asosmini.model.Gender.WOMEN;
 
 public class MainActivityPresenterImpl implements MainActivityPresenter, DataFetchedListener {
 

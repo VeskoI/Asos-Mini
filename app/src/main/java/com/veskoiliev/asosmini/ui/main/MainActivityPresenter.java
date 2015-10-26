@@ -1,4 +1,4 @@
-package com.veskoiliev.asosmini;
+package com.veskoiliev.asosmini.ui.main;
 
 import android.os.Bundle;
 

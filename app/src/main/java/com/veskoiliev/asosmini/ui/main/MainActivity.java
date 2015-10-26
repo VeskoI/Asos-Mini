@@ -1,4 +1,4 @@
-package com.veskoiliev.asosmini;
+package com.veskoiliev.asosmini.ui.main;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.veskoiliev.asosmini.R;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
 import com.veskoiliev.asosmini.widget.GridAutoFitLayoutManager;

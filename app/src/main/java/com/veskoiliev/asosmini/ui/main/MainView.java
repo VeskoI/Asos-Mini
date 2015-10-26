@@ -1,4 +1,4 @@
-package com.veskoiliev.asosmini;
+package com.veskoiliev.asosmini.ui.main;
 
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;

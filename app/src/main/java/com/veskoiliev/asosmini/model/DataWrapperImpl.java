@@ -12,7 +12,6 @@ import com.veskoiliev.asosmini.model.pojo.CategoriesListing;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
 import com.veskoiliev.asosmini.model.pojo.ProductsListing;
-import com.veskoiliev.asosmini.ui.DataFetchedListener;
 
 import java.util.List;
 

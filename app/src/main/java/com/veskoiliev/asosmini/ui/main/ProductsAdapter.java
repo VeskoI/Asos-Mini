@@ -1,4 +1,4 @@
-package com.veskoiliev.asosmini;
+package com.veskoiliev.asosmini.ui.main;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.veskoiliev.asosmini.R;
 import com.veskoiliev.asosmini.model.pojo.Product;
 
 import java.util.ArrayList;

@@ -1,27 +1,25 @@
-package com.veskoiliev.asosmini.ui;
+package com.veskoiliev.asosmini.ui.splash;
 
 import com.veskoiliev.asosmini.model.DataWrapperImpl;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
+import com.veskoiliev.asosmini.model.DataFetchedListener;
 
 import java.util.List;
 
 public class SplashPresenterImpl implements SplashPresenter, DataFetchedListener {
 
     private final SplashView mView;
-//    private final SplashInteractor mInteractor;
     private final DataWrapperImpl mDataWrapper;
 
     public SplashPresenterImpl(SplashView splashView) {
         mView = splashView;
-//        mInteractor = new SplashInteractorImpl();
         mDataWrapper = new DataWrapperImpl();
     }
 
     @Override
     public void onActivityCreated() {
         mView.showLoadingProgressBar();
-//        mInteractor.loadCategories(this);
         mDataWrapper.loadCategories(true, this);
     }
 

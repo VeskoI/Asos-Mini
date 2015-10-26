@@ -1,4 +1,4 @@
-package com.veskoiliev.asosmini;
+package com.veskoiliev.asosmini.model;
 
 public enum Gender {
     MEN, WOMEN
