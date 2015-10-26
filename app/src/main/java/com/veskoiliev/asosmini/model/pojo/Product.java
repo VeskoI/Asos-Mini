@@ -51,6 +51,10 @@ public class Product {
         this.categoryDatabaseId = categoryDatabaseId;
     }
 
+    public String getCurrentPrice() {
+        return currentPrice;
+    }
+
     @Nullable
     public String getImageUrl() {
         if (mainImageUrl == null && imageUrls != null && !imageUrls.isEmpty()) {

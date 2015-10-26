@@ -9,4 +9,9 @@ public interface MainView {
     void onCategoriesLoaded(List<Category> categories);
 
     void onProductsLoaded(List<Product> products);
+
+    void onMenuItemSelected(long id);
+
+    void openDrawer();
+
 }
