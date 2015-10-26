@@ -86,4 +86,8 @@ public class Product {
     public long getId() {
         return productId;
     }
+
+    public String getTitle() {
+        return title;
+    }
 }

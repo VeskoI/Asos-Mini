@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -18,15 +17,17 @@ import android.widget.Button;
 import com.veskoiliev.asosmini.R;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
+import com.veskoiliev.asosmini.ui.BaseActivity;
 import com.veskoiliev.asosmini.ui.singleproduct.SingleProductActivity;
 import com.veskoiliev.asosmini.widget.GridAutoFitLayoutManager;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainView, ProductSelectListener {
 
     @Bind(R.id.drawer_layout)
@@ -115,21 +116,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_favorites) {
+            mPresenter.onFavoritesClicked();
+            return true;
+        } else if (id == R.id.action_bag) {
+            mPresenter.onBagClicked();
             return true;
         }
 
@@ -209,7 +203,27 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onProductSelected(long productDatabaseId) {
-        mPresenter.onProductSelected(productDatabaseId);
+    public void onDisplayFavorites(HashMap<Long, Product> favorites) {
+        displayFavorites(favorites);
+    }
+
+    @Override
+    public void onDisplayBag(HashMap<Long, Integer> bag) {
+        displayBag(bag);
+    }
+
+    @Override
+    public void onAddedToFavorites() {
+        Snackbar.make(mToolbar, getString(R.string.added_to_favorites), Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onProductSelected(long productId) {
+        mPresenter.onProductSelected(productId);
+    }
+
+    @Override
+    public void addProductToFavorites(long productId) {
+        mPresenter.onProductToggleFavorites(productId);
     }
 }

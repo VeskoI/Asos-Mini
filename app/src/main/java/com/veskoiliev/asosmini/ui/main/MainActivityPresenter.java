@@ -2,7 +2,9 @@ package com.veskoiliev.asosmini.ui.main;
 
 import android.os.Bundle;
 
-public interface MainActivityPresenter {
+import com.veskoiliev.asosmini.ui.ActionBarPresenter;
+
+public interface MainActivityPresenter extends ActionBarPresenter {
 
     void onCreate();
 
@@ -17,4 +19,6 @@ public interface MainActivityPresenter {
     void onRestoreInstanceState(Bundle savedInstanceState);
 
     void onProductSelected(long productId);
+
+    void onProductToggleFavorites(long productId);
 }

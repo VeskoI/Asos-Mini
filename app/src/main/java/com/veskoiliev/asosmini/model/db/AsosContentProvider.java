@@ -57,7 +57,6 @@ public class AsosContentProvider extends ContentProvider {
         return Uri.parse("content://" + AUTHORITY + "/" + PATH_CATEGORY + "/women");
     }
 
-
     public static Uri getUriProducts() {
         return Uri.parse("content://" + AUTHORITY + "/" + PATH_PRODUCT);
     }

@@ -37,6 +37,10 @@ public class ProductDetails {
         return currentPrice;
     }
 
+    public long getProductId() {
+        return productId;
+    }
+
     public long getId() {
         return productId;
     }

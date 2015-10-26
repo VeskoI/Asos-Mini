@@ -11,4 +11,8 @@
     <string name="add_to_bag_with_price">Add to Bag (%1$s)</string>
     <string name="action_favorites">Favorites</string>
     <string name="bag">Shopping Bag</string>
+    <string name="favorites_list">Favorites:</string>
+    <string name="bag_contents">Your shopping bag:</string>
+    <string name="added_to_bag">Product added to bag!</string>
+    <string name="added_to_favorites">Added to favorites!</string>
 </resources>

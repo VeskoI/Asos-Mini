@@ -55,16 +55,36 @@ public class ContentProviderHelper {
     }
 
     @Nullable
-    public static String getCategoryIdByDatabaseId(ContentResolver mContentResolver, long categoryDatabaseId) {
+    public static String getCategoryIdByDatabaseId(ContentResolver contentResolver, long categoryDatabaseId) {
         String result = null;
 
         Uri uri = AsosContentProvider.getUriCategorySingle(categoryDatabaseId);
-        Cursor cursor = mContentResolver.query(uri, null, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            result = cursor.getString(cursor.getColumnIndex(Contract.Category.COLUMN_CATEGORY_ID));
+        Cursor cursor = contentResolver.query(uri, null, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                result = cursor.getString(cursor.getColumnIndex(Contract.Category.COLUMN_CATEGORY_ID));
+            }
             cursor.close();
         }
 
         return result;
+    }
+
+    public static Product getProductById(ContentResolver contentResolver, long productId) {
+        Product result = null;
+
+        Uri uri = AsosContentProvider.getUriProducts();
+        String selection = Contract.Product.COLUMN_PRODUCT_ID + "= ?";
+        String[] selectionArgs = {String.valueOf(productId)};
+        Cursor cursor = contentResolver.query(uri, null, selection, selectionArgs, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                result = Product.fromCursor(cursor);
+            }
+            cursor.close();
+        }
+
+        return result;
+
     }
 }

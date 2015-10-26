@@ -10,6 +10,7 @@ import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
 import com.veskoiliev.asosmini.model.DataFetchedListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.veskoiliev.asosmini.model.Gender.MEN;
@@ -112,6 +113,12 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
     }
 
     @Override
+    public void onProductToggleFavorites(long productId) {
+        mDataWrapper.addToFavorites(productId);
+        mView.onAddedToFavorites();
+    }
+
+    @Override
     public void onCategoriesLoaded(List<Category> categories) {
         mView.onCategoriesLoaded(categories);
     }
@@ -125,5 +132,17 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
     @Override
     public void onProductsLoaded(List<Product> products) {
         mView.onProductsLoaded(products);
+    }
+
+    @Override
+    public void onFavoritesClicked() {
+        HashMap<Long, Product> favorites = mDataWrapper.getFavorites();
+        mView.onDisplayFavorites(favorites);
+    }
+
+    @Override
+    public void onBagClicked() {
+        HashMap<Long, Integer> bag = mDataWrapper.getBag();
+        mView.onDisplayBag(bag);
     }
 }

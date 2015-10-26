@@ -15,6 +15,7 @@ import com.veskoiliev.asosmini.model.pojo.ProductDetails;
 import com.veskoiliev.asosmini.model.pojo.ProductsListing;
 import com.veskoiliev.asosmini.ui.singleproduct.ProductLoadedListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit.Call;
@@ -25,6 +26,12 @@ import retrofit.Retrofit;
 public class DataWrapperImpl implements DataWrapper {
 
     private static final String TAG = "vesko";
+
+    private static final int INITIAL_CAPACITY = 10;
+
+    // For the sake of this example, let's keep Favorites and Bag only in memory.
+    private static HashMap<Long, Product> mFavorites = new HashMap<>(INITIAL_CAPACITY);
+    private static HashMap<Long, Integer> mBag = new HashMap<>(INITIAL_CAPACITY);
 
     private ContentResolver mContentResolver;
     private AsosService mNetworkService;
@@ -76,6 +83,35 @@ public class DataWrapperImpl implements DataWrapper {
             }
         });
     }
+
+    @Override
+    public void addToFavorites(long productId) {
+        Product product = ContentProviderHelper.getProductById(mContentResolver, productId);
+        mFavorites.put(productId, product);
+    }
+
+    @Override
+    public void addToBag(long productId) {
+        int newCount = 1;
+
+        Integer old = mBag.get(productId);
+        if (old != null) {
+            newCount += old;
+        }
+
+        mBag.put(productId, newCount);
+    }
+
+    @Override
+    public HashMap<Long, Product> getFavorites() {
+        return mFavorites;
+    }
+
+    @Override
+    public HashMap<Long, Integer> getBag() {
+        return mBag;
+    }
+
 
     private void fetchProducts(final long categoryDatabaseId, final DataFetchedListener listener) {
         String categoryId =

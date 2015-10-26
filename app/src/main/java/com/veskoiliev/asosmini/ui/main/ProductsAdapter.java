@@ -57,7 +57,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
         notifyDataSetChanged();
     }
 
-    class ProductHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ProductHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         @Bind(R.id.product_image)
         ImageView icon;
@@ -71,11 +71,19 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
             super(view);
             ButterKnife.bind(this, view);
             view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             mListener.onProductSelected(productId);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            // // TODO: 10/26/2015 perhaps we need a "removeFromFavorites" action as well
+            mListener.addProductToFavorites(productId);
+            return true;
         }
     }
 }

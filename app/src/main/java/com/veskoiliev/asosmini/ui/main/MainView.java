@@ -3,6 +3,7 @@ package com.veskoiliev.asosmini.ui.main;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface MainView {
@@ -19,4 +20,10 @@ public interface MainView {
     void openSingleProductPage(long productId);
 
     void onError(String errorMessage);
+
+    void onDisplayFavorites(HashMap<Long, Product> favorites);
+
+    void onDisplayBag(HashMap<Long, Integer> bag);
+
+    void onAddedToFavorites();
 }
