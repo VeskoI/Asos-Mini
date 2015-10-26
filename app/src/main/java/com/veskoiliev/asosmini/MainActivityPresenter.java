@@ -4,9 +4,7 @@ import android.os.Bundle;
 
 public interface MainActivityPresenter {
 
-    void onCreate(boolean men);
-
-    void onRecreate(boolean men);
+    void onCreate();
 
     void onMenuWomenClicked();
 

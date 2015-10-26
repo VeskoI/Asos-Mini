@@ -98,7 +98,8 @@ public class DataWrapperImpl implements DataWrapper {
     }
 
     private void fetchCategories(final boolean men, final DataFetchedListener listener) {
-        Call<CategoriesListing> call = mNetworkService.getCategories("men");
+        String gender = men ? AsosService.GENDER_MEN : AsosService.GENDER_WOMEN;
+        Call<CategoriesListing> call = mNetworkService.getCategories(gender);
         call.enqueue(new Callback<CategoriesListing>() {
             @Override
             public void onResponse(Response<CategoriesListing> response, Retrofit retrofit) {

@@ -14,4 +14,5 @@ public interface MainView {
 
     void openDrawer();
 
+    void toggleGenderButtons(boolean displayingMen);
 }

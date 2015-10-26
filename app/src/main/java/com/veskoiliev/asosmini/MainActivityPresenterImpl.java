@@ -1,6 +1,7 @@
 package com.veskoiliev.asosmini;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.veskoiliev.asosmini.model.DataWrapper;
 import com.veskoiliev.asosmini.model.DataWrapperImpl;
@@ -10,64 +11,68 @@ import com.veskoiliev.asosmini.ui.DataFetchedListener;
 
 import java.util.List;
 
-import static com.veskoiliev.asosmini.model.db.Contract.Category.GENDER_MEN;
-import static com.veskoiliev.asosmini.model.db.Contract.Category.GENDER_WOMEN;
+import static com.veskoiliev.asosmini.Gender.MEN;
+import static com.veskoiliev.asosmini.Gender.WOMEN;
 
 public class MainActivityPresenterImpl implements MainActivityPresenter, DataFetchedListener {
 
     private static final String KEY_SELECTED_GENDER = "SELECTED_GENDER";
     private static final String KEY_SELECTED_CATEGORY = "SELECTED_CATEGORY";
+    private static final long NOT_SET = -1;
+
     private static final String TAG = "vesko";
 
     private MainView mView;
     private DataWrapper mDataWrapper;
 
-    private int mSelectedGender;
-    private long mSelectedCategory;
+    private long mSelectedCategory = NOT_SET;
+    private Gender mSelectedGender;
 
     public MainActivityPresenterImpl(MainView mainView) {
         mView = mainView;
         mDataWrapper = new DataWrapperImpl();
-        mSelectedGender = GENDER_MEN;
+        mSelectedGender = MEN;
     }
 
     @Override
-    public void onCreate(boolean men) {
-        loadCategories(men);
+    public void onCreate() {
+        loadCategories(mSelectedGender);
 
         if (mSelectedCategory == 0) {
             mView.openDrawer();
         }
+
+        mView.toggleGenderButtons(mSelectedGender == MEN);
     }
 
-    @Override
-    public void onRecreate(boolean men) {
-        loadCategories(men);
-    }
-
-    private void loadCategories(boolean men) {
-        mSelectedGender = men ? GENDER_MEN : GENDER_WOMEN;
+    private void loadCategories(Gender gender) {
+        boolean men = gender == MEN;
         mDataWrapper.loadCategories(men, this);
     }
 
     @Override
     public void onMenuWomenClicked() {
-        if (mSelectedGender == GENDER_WOMEN) {
+        if (mSelectedGender == WOMEN) {
             // We're already displaying those, nothing to do here.
             return;
         }
 
-        onCreate(true);
+        mSelectedGender = WOMEN;
+        loadCategories(mSelectedGender);
+        mView.toggleGenderButtons(false);
     }
 
     @Override
     public void onMenuMenClicked() {
-        if (mSelectedGender == GENDER_MEN) {
+        if (mSelectedGender == MEN) {
             // We're already displaying those, nothing to do here.
+            Log.d(TAG, "onMenuMenClicked: ALREADY here");
             return;
         }
 
-        onCreate(false);
+        mSelectedGender = MEN;
+        loadCategories(mSelectedGender);
+        mView.toggleGenderButtons(true);
     }
 
     @Override
@@ -80,16 +85,23 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(KEY_SELECTED_GENDER, mSelectedGender);
+        outState.putSerializable(KEY_SELECTED_GENDER, mSelectedGender);
         outState.putLong(KEY_SELECTED_CATEGORY, mSelectedCategory);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
-        mSelectedGender = savedInstanceState.getInt(KEY_SELECTED_GENDER);
-        mSelectedCategory = savedInstanceState.getLong(KEY_SELECTED_CATEGORY);
+        mSelectedGender = (Gender) savedInstanceState.getSerializable(KEY_SELECTED_GENDER);
+        mSelectedCategory = savedInstanceState.getLong(KEY_SELECTED_CATEGORY, NOT_SET);
 
-        onCategorySelected(mSelectedCategory);
+        boolean displayingMen = mSelectedGender == MEN;
+        mView.toggleGenderButtons(displayingMen);
+
+        loadCategories(mSelectedGender);
+
+        if (mSelectedCategory != NOT_SET) {
+            onCategorySelected(mSelectedCategory);
+        }
     }
 
     @Override

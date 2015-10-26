@@ -12,6 +12,9 @@ import retrofit.http.Query;
 
 public interface AsosService {
 
+    String GENDER_MEN = "men";
+    String GENDER_WOMEN = "women";
+
     @GET("/u/1559445/ASOS/SampleApi/cats_{gender}.json")
     Call<CategoriesListing> getCategories(@Path("gender") String gender);
 

@@ -9,8 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
@@ -38,6 +41,9 @@ public class MainActivity extends AppCompatActivity
     @Bind(R.id.products_list)
     RecyclerView mRecyclerView;
 
+    private Button mGenderMen;
+    private Button mGenderWomen;
+
     private ProductsAdapter mAdapter;
     private MainActivityPresenter mPresenter;
 
@@ -50,10 +56,11 @@ public class MainActivity extends AppCompatActivity
         initViews();
 
         mPresenter = new MainActivityPresenterImpl(this);
+
+        // If we're creating the Activity from scratch we need to notify the presenter.
+        // Otherwise the onRestoreInstanceState() will handle the initialization.
         if (savedInstanceState == null) {
-            mPresenter.onCreate(true);
-        } else {
-            mPresenter.onRecreate(true);
+            mPresenter.onCreate();
         }
     }
 
@@ -65,9 +72,30 @@ public class MainActivity extends AppCompatActivity
         mDrawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
+        // NavigationView - we need to add the Header manually to capture the Women/Men buttons.
         mNavigationView.setNavigationItemSelectedListener(this);
+        View headerView = LayoutInflater.from(this).inflate(R.layout.nav_header_main, mNavigationView, false);
+
+        mGenderMen = (Button) headerView.findViewById(R.id.menu_btn_men);
+        mGenderMen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.onMenuMenClicked();
+            }
+        });
+
+        mGenderWomen = (Button) headerView.findViewById(R.id.menu_btn_women);
+        mGenderWomen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.onMenuWomenClicked();
+            }
+        });
+        mNavigationView.addHeaderView(headerView);
 
 
+        // Init the RecyclerView.
         int paddingPx = getResources().getDimensionPixelSize(R.dimen.products_list_item_padding);
         int columnWidthPx = getResources().getDimensionPixelSize(R.dimen.products_list_item_width);
         mRecyclerView.addItemDecoration(new ProductsItemDecoration(paddingPx));
@@ -170,5 +198,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void openDrawer() {
         mDrawer.openDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void toggleGenderButtons(boolean displayingMen) {
+        mGenderMen.setEnabled(!displayingMen);
+        mGenderWomen.setEnabled(displayingMen);
     }
 }
