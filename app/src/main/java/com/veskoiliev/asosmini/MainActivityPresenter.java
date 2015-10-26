@@ -8,5 +8,5 @@ public interface MainActivityPresenter {
 
     void onMenuMenClicked();
 
-    void onCategorySelected(int id);
+    void onCategorySelected(long id);
 }

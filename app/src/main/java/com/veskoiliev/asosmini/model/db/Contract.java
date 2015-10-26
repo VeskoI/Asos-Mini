@@ -42,7 +42,7 @@ public class Contract {
     public static final class Product {
         public static final String TABLE_NAME = "product";
         public static final String COLUMN_PRODUCT_ID = "productId";
-        public static final String COLUMN_CATEGORY_ID = "categoryId";
+        public static final String COLUMN_CATEGORY_DATABASE_ID = "categoryDatabaseId";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_BASE_PRICE = "basePrice";
         public static final String COLUMN_BRAND = "brand";
@@ -50,14 +50,14 @@ public class Contract {
         public static final String COLUMN_HAS_MORE_COLORS = "hasMoreColors";
         public static final String COLUMN_IMAGE_URL = "imageUrl";
 
-        // TODO: 10/26/2015 CATEGORY_ID should reference CATEGORY.categoryId
+        // TODO: 10/26/2015 CATEGORY_ID should reference CATEGORY._ID
         private static final String SQL_CREATE_TABLE = "create table "
                 + TABLE_NAME
                 + "("
                 + COLUMN_ID + " integer primary key autoincrement not null, "
                 + COLUMN_TITLE + " varchar not null, "
                 + COLUMN_PRODUCT_ID + " integer not null, "
-                + COLUMN_CATEGORY_ID + " varchar not null, "
+                + COLUMN_CATEGORY_DATABASE_ID + " integer not null, "
                 + COLUMN_BASE_PRICE + " numeric, "
                 + COLUMN_CURRENT_PRICE + " varchar, "
                 + COLUMN_BRAND + " varchar, "

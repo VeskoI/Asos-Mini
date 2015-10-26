@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.veskoiliev.asosmini.model.pojo.Category;
+import com.veskoiliev.asosmini.model.pojo.Product;
 
 import java.util.List;
 
@@ -106,8 +107,14 @@ public class MainActivity extends AppCompatActivity
         if (!categories.isEmpty()) {
             menu.clear();
             for (Category c : categories) {
-                mNavigationView.getMenu().add(0, c.getDatabaseId(), 0, c.getName());
+                mNavigationView.getMenu().add(0, (int)c.getDatabaseId(), 0, c.getName());
             }
         }
+    }
+
+    @Override
+    public void onProductsLoaded(List<Product> products) {
+        // TODO: 10/26/2015 display in RecyclerView
+        Log.d(TAG, "onProductsLoaded() called with: " + "products = [" + products + "]");
     }
 }

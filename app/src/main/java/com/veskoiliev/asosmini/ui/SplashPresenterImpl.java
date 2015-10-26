@@ -2,6 +2,7 @@ package com.veskoiliev.asosmini.ui;
 
 import com.veskoiliev.asosmini.model.DataWrapperImpl;
 import com.veskoiliev.asosmini.model.pojo.Category;
+import com.veskoiliev.asosmini.model.pojo.Product;
 
 import java.util.List;
 
@@ -32,5 +33,10 @@ public class SplashPresenterImpl implements SplashPresenter, DataFetchedListener
     @Override
     public void onDataError(String errorMessage) {
         mView.displayError(errorMessage);
+    }
+
+    @Override
+    public void onProductsLoaded(List<Product> products) {
+
     }
 }

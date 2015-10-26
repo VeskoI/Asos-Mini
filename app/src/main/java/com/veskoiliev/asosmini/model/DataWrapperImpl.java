@@ -11,6 +11,7 @@ import com.veskoiliev.asosmini.model.db.ContentProviderHelper;
 import com.veskoiliev.asosmini.model.pojo.CategoriesListing;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
+import com.veskoiliev.asosmini.model.pojo.ProductsListing;
 import com.veskoiliev.asosmini.ui.DataFetchedListener;
 
 import java.util.List;
@@ -32,7 +33,6 @@ public class DataWrapperImpl implements DataWrapper {
         mNetworkService = AsosService.Factory.create();
     }
 
-
     @Override
     public void loadCategories(final boolean men, final DataFetchedListener listener) {
         List<Category> categories = ContentProviderHelper.getCategories(mContentResolver, men);
@@ -43,9 +43,62 @@ public class DataWrapperImpl implements DataWrapper {
         }
     }
 
+    @Override
+    public void loadProductsForCategory(long categoryDatabaseId, DataFetchedListener listener) {
+        List<Product> products =
+                ContentProviderHelper.getProductsForCategory(mContentResolver, categoryDatabaseId);
+        if (!products.isEmpty()) {
+            listener.onProductsLoaded(products);
+        } else {
+            fetchProducts(categoryDatabaseId, listener);
+        }
+    }
+
+    private void fetchProducts(final long categoryDatabaseId, final DataFetchedListener listener) {
+        String categoryId =
+                ContentProviderHelper.getCategoryIdByDatabaseId(mContentResolver, categoryDatabaseId);
+
+        Call<ProductsListing> call = mNetworkService.getProductsForCategory(categoryId);
+
+        call.enqueue(new Callback<ProductsListing>() {
+            @Override
+            public void onResponse(Response<ProductsListing> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    ProductsListing listing = response.body();
+
+                    if (listing != null && listing.getProducts() != null) {
+                        List<Product> products = listing.getProducts();
+
+                        // We have to update the categoryDatabaseId ourselves, as it's not returned by the server
+                        for (Product p : products) {
+                            p.setCategoryDatabaseId(categoryDatabaseId);
+                        }
+
+                        ContentValues[] contentValues = new ContentValues[products.size()];
+                        for (int i = 0; i < products.size(); i++) {
+                            contentValues[i] = products.get(i).getContentValues();
+                        }
+
+                        int rowsInserted = mContentResolver.bulkInsert(AsosContentProvider.getUriProducts(), contentValues);
+                        Log.d(TAG, "___ products inserted: " + rowsInserted);
+
+                        listener.onProductsLoaded(products);
+                        return;
+                    }
+                }
+
+                listener.onDataError(response.message());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                listener.onDataError(t.getMessage());
+            }
+        });
+    }
+
     private void fetchCategories(final boolean men, final DataFetchedListener listener) {
-        AsosService asosService = AsosService.Factory.create();
-        Call<CategoriesListing> call = asosService.getCategories("men");
+        Call<CategoriesListing> call = mNetworkService.getCategories("men");
         call.enqueue(new Callback<CategoriesListing>() {
             @Override
             public void onResponse(Response<CategoriesListing> response, Retrofit retrofit) {
@@ -66,7 +119,7 @@ public class DataWrapperImpl implements DataWrapper {
                         }
 
                         int rowsInserted = mContentResolver.bulkInsert(AsosContentProvider.getUriCategories(), contentValues);
-                        Log.d(TAG, "___ rowsInserted: " + rowsInserted);
+                        Log.d(TAG, "___ categories inserted: " + rowsInserted);
 
                         listener.onCategoriesLoaded(categories);
                         return;
@@ -81,11 +134,6 @@ public class DataWrapperImpl implements DataWrapper {
                 listener.onDataError(t.getMessage());
             }
         });
-    }
-
-    @Override
-    public List<Product> getProductsForCategory(String categoryId) {
-        return null;
     }
 
     @Override

@@ -27,9 +27,9 @@ public class Category {
     }
 
     private int gender;
-    private int _id;
+    private long _id;
 
-    public int getDatabaseId() {
+    public long getDatabaseId() {
         return _id;
     }
 
@@ -40,7 +40,7 @@ public class Category {
 
     public static Category fromCursor(Cursor cursor) {
         Category category = new Category();
-        category._id = cursor.getInt(cursor.getColumnIndex(Contract.COLUMN_ID));
+        category._id = cursor.getLong(cursor.getColumnIndex(Contract.COLUMN_ID));
         category.name = cursor.getString(cursor.getColumnIndex(Contract.COLUMN_NAME));
         category.categoryId = cursor.getString(cursor.getColumnIndex(Contract.Category.COLUMN_CATEGORY_ID));
         category.productCount = cursor.getInt(cursor.getColumnIndex(Contract.Category.COLUMN_PRODUCT_COUNT));
@@ -54,7 +54,7 @@ public class Category {
 
     @NonNull
     public ContentValues getContentValues() {
-        ContentValues contentValues = new ContentValues(6);
+        ContentValues contentValues = new ContentValues(4);
         contentValues.put(Contract.COLUMN_NAME, name);
         contentValues.put(Contract.Category.COLUMN_CATEGORY_ID, categoryId);
         contentValues.put(Contract.Category.COLUMN_PRODUCT_COUNT, productCount);

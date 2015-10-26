@@ -3,6 +3,7 @@ package com.veskoiliev.asosmini;
 import com.veskoiliev.asosmini.model.DataWrapper;
 import com.veskoiliev.asosmini.model.DataWrapperImpl;
 import com.veskoiliev.asosmini.model.pojo.Category;
+import com.veskoiliev.asosmini.model.pojo.Product;
 import com.veskoiliev.asosmini.ui.DataFetchedListener;
 
 import java.util.List;
@@ -48,8 +49,8 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
     }
 
     @Override
-    public void onCategorySelected(int id) {
-        // TODO: 10/26/2015 implement
+    public void onCategorySelected(long id) {
+        mDataWrapper.loadProductsForCategory(id, this);
     }
 
     @Override
@@ -59,6 +60,11 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
 
     @Override
     public void onDataError(String errorMessage) {
+        // TODO: 10/26/2015
+    }
 
+    @Override
+    public void onProductsLoaded(List<Product> products) {
+        mView.onProductsLoaded(products);
     }
 }

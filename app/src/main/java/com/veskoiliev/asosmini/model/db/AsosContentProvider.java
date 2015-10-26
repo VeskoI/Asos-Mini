@@ -35,7 +35,6 @@ public class AsosContentProvider extends ContentProvider {
         sUriMatcher.addURI(AUTHORITY, PATH_CATEGORY + "/#", ID_CATEGORY_SINGLE);
         sUriMatcher.addURI(AUTHORITY, PATH_CATEGORY + "/men", ID_CATEGORIES_MEN);
         sUriMatcher.addURI(AUTHORITY, PATH_CATEGORY + "/women", ID_CATEGORIES_WOMEN);
-//        sUriMatcher.addURI(AUTHORITY, PATH_ACCOUNT + "/" + PATH_BALANCE + "/#", ID_ACCOUNTS_BALANCE);
 
         sUriMatcher.addURI(AUTHORITY, PATH_PRODUCT, ID_PRODUCTS_ALL);
         sUriMatcher.addURI(AUTHORITY, PATH_PRODUCT + "/#", ID_PRODUCT_SINGLE);
@@ -58,6 +57,14 @@ public class AsosContentProvider extends ContentProvider {
         return Uri.parse("content://" + AUTHORITY + "/" + PATH_CATEGORY + "/women");
     }
 
+
+    public static Uri getUriProducts() {
+        return Uri.parse("content://" + AUTHORITY + "/" + PATH_PRODUCT);
+    }
+
+    public static Uri getUriProductsForCategory(long categoryDatabaseId) {
+        return Uri.parse("content://" + AUTHORITY + "/" + PATH_PRODUCT + "/" + PATH_CATEGORY + "/" + categoryDatabaseId);
+    }
 
     public static Uri getUriProductSingle(long id) {
         return Uri.parse("content://" + AUTHORITY + "/" + PATH_PRODUCT + "/" + id);
@@ -85,6 +92,11 @@ public class AsosContentProvider extends ContentProvider {
                 queryBuilder.setTables(Contract.Category.TABLE_NAME);
                 break;
 
+            case ID_CATEGORY_SINGLE:
+                queryBuilder.setTables(Contract.Category.TABLE_NAME);
+                queryBuilder.appendWhere(Contract.COLUMN_ID + "=" + uri.getLastPathSegment());
+                break;
+
             case ID_CATEGORIES_MEN:
                 queryBuilder.setTables(Contract.Category.TABLE_NAME);
                 queryBuilder.appendWhere(Contract.Category.COLUMN_GENDER + "=" + Contract.Category.GENDER_MEN);
@@ -106,7 +118,7 @@ public class AsosContentProvider extends ContentProvider {
 
             case ID_PRODUCTS_BY_CATEGORY:
                 queryBuilder.setTables(Contract.Product.TABLE_NAME);
-                queryBuilder.appendWhere(Contract.Product.COLUMN_CATEGORY_ID + "=" + uri.getLastPathSegment());
+                queryBuilder.appendWhere(Contract.Product.COLUMN_CATEGORY_DATABASE_ID + "=" + uri.getLastPathSegment());
                 break;
 
             default:
