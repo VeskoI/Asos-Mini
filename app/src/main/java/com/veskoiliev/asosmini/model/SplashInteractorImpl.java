@@ -1,6 +1,5 @@
 package com.veskoiliev.asosmini.model;
 
-import com.veskoiliev.asosmini.AsosMiniApp;
 import com.veskoiliev.asosmini.AsosService;
 import com.veskoiliev.asosmini.model.pojo.CategoriesListing;
 import com.veskoiliev.asosmini.ui.DataFetchedListener;
@@ -23,8 +22,7 @@ public class SplashInteractorImpl implements SplashInteractor {
                     CategoriesListing categoriesListing = response.body();
 
                     if (categoriesListing != null && categoriesListing.getCategories() != null) {
-                        AsosMiniApp.getInstance().setCategories(categoriesListing.getCategories());
-                        listener.onDataLoaded();
+                        listener.onCategoriesLoaded(categoriesListing.getCategories());
                         return;
                     }
                 }

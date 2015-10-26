@@ -15,6 +15,8 @@ public class Contract {
         public static final String COLUMN_CATEGORY_ID = "categoryId";
         public static final String COLUMN_PRODUCT_COUNT = "productCount";
         public static final String COLUMN_GENDER = "gender";
+        public static final short GENDER_MEN = 0;
+        public static final short GENDER_WOMEN = 1;
 
         private static final String SQL_CREATE_TABLE = "create table "
                 + TABLE_NAME
