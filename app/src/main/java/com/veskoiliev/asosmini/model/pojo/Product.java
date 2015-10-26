@@ -33,6 +33,11 @@ public class Product {
     @SerializedName("Title")
     private String title;
 
+    @Override
+    public String toString() {
+        return "_id: " + _id + ", productId: " + productId + ", title: " + title + ", mainImageUrl: " + getImageUrl();
+    }
+
     public static Product fromCursor(Cursor cursor) {
         Product product = new Product();
         product._id = cursor.getLong(cursor.getColumnIndex(Contract.COLUMN_ID));
@@ -45,6 +50,19 @@ public class Product {
         product.title = cursor.getString(cursor.getColumnIndex(Contract.Product.COLUMN_TITLE));
 
         return product;
+    }
+
+    public ContentValues getContentValues() {
+        ContentValues values = new ContentValues(7);
+        values.put(Contract.Product.COLUMN_PRODUCT_ID, productId);
+        values.put(Contract.Product.COLUMN_CATEGORY_DATABASE_ID, categoryDatabaseId);
+        values.put(Contract.Product.COLUMN_CURRENT_PRICE, currentPrice);
+        values.put(Contract.Product.COLUMN_BRAND, brand);
+        values.put(Contract.Product.COLUMN_IMAGE_URL, getImageUrl());
+        values.put(Contract.Product.COLUMN_BASE_PRICE, basePrice);
+        values.put(Contract.Product.COLUMN_TITLE, title);
+
+        return values;
     }
 
     public void setCategoryDatabaseId(long categoryDatabaseId) {
@@ -65,21 +83,7 @@ public class Product {
         return mainImageUrl;
     }
 
-    public ContentValues getContentValues() {
-        ContentValues values = new ContentValues(7);
-        values.put(Contract.Product.COLUMN_PRODUCT_ID, productId);
-        values.put(Contract.Product.COLUMN_CATEGORY_DATABASE_ID, categoryDatabaseId);
-        values.put(Contract.Product.COLUMN_CURRENT_PRICE, currentPrice);
-        values.put(Contract.Product.COLUMN_BRAND, brand);
-        values.put(Contract.Product.COLUMN_IMAGE_URL, getImageUrl());
-        values.put(Contract.Product.COLUMN_BASE_PRICE, basePrice);
-        values.put(Contract.Product.COLUMN_TITLE, title);
-
-        return values;
-    }
-
-    @Override
-    public String toString() {
-        return "_id: " + _id + ", productId: " + productId + ", title: " + title + ", mainImageUrl: " + getImageUrl();
+    public long getId() {
+        return productId;
     }
 }

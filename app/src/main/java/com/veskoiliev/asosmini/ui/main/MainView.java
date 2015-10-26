@@ -15,4 +15,8 @@ public interface MainView {
     void openDrawer();
 
     void toggleGenderButtons(boolean displayingMen);
+
+    void openSingleProductPage(long productId);
+
+    void onError(String errorMessage);
 }

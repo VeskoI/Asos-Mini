@@ -22,7 +22,12 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
 
     private static final int INITIAL_CAPACITY = 20;
 
+    private ProductSelectListener mListener;
     private List<Product> mData = new ArrayList<>(INITIAL_CAPACITY);
+
+    public ProductsAdapter(ProductSelectListener listener) {
+        mListener = listener;
+    }
 
     @Override
     public ProductHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -36,6 +41,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
         }
 
         Product product = mData.get(position);
+        holder.productId = product.getId();
         holder.price.setText(product.getCurrentPrice());
         Picasso.with(holder.icon.getContext()).load(product.getImageUrl()).into(holder.icon);
     }
@@ -51,7 +57,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
         notifyDataSetChanged();
     }
 
-    static class ProductHolder extends RecyclerView.ViewHolder {
+    class ProductHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @Bind(R.id.product_image)
         ImageView icon;
@@ -59,9 +65,17 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
         @Bind(R.id.product_price)
         TextView price;
 
+        long productId;
+
         public ProductHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onProductSelected(productId);
         }
     }
 }

@@ -106,13 +106,20 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
     }
 
     @Override
+    public void onProductSelected(long productId) {
+        // Any validations come here ...
+        mView.openSingleProductPage(productId);
+    }
+
+    @Override
     public void onCategoriesLoaded(List<Category> categories) {
         mView.onCategoriesLoaded(categories);
     }
 
     @Override
     public void onDataError(String errorMessage) {
-        // TODO: 10/26/2015
+        // TODO: 10/26/2015 transform the "raw" error message to a more user-friendly one
+        mView.onError(errorMessage);
     }
 
     @Override

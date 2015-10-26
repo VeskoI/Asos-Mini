@@ -4,10 +4,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-
     <string name="title_activity_splash">SplashActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="cd_app_logo">ASOS logo</string>
+    <string name="title_activity_single_product">SingleProductActivity</string>
+
+    <string name="add_to_bag_with_price">Add to Bag (%1$s)</string>
+    <string name="action_favorites">Favorites</string>
+    <string name="bag">Shopping Bag</string>
 </resources>

@@ -2,13 +2,13 @@ package com.veskoiliev.asosmini.ui.main;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +18,7 @@ import android.widget.Button;
 import com.veskoiliev.asosmini.R;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
+import com.veskoiliev.asosmini.ui.singleproduct.SingleProductActivity;
 import com.veskoiliev.asosmini.widget.GridAutoFitLayoutManager;
 
 import java.util.List;
@@ -26,9 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainView {
-
-    private static final String TAG = "vesko";
+        implements NavigationView.OnNavigationItemSelectedListener, MainView, ProductSelectListener {
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawer;
@@ -101,7 +100,7 @@ public class MainActivity extends AppCompatActivity
         int columnWidthPx = getResources().getDimensionPixelSize(R.dimen.products_list_item_width);
         mRecyclerView.addItemDecoration(new ProductsItemDecoration(paddingPx));
         mRecyclerView.setLayoutManager(new GridAutoFitLayoutManager(this, columnWidthPx));
-        mAdapter = new ProductsAdapter();
+        mAdapter = new ProductsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -142,16 +141,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Log.d(TAG, "onNavigationItemSelected: clicked: " + id);
         mPresenter.onCategorySelected(id);
-
-        // TODO: 10/26/2015 fix WOMEN / MEN buttons
-//        if (id == R.id.menu_btn_women) {
-//            mPresenter.onMenuWomenClicked();
-//            // Handle the camera action
-//        } else if (id == R.id.menu_btn_men) {
-//            mPresenter.onMenuMenClicked();
-//        }
 
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
@@ -205,5 +195,21 @@ public class MainActivity extends AppCompatActivity
     public void toggleGenderButtons(boolean displayingMen) {
         mGenderMen.setEnabled(!displayingMen);
         mGenderWomen.setEnabled(displayingMen);
+    }
+
+    @Override
+    public void openSingleProductPage(long productId) {
+        startActivity(
+                SingleProductActivity.getStartIntent(this, productId));
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+        Snackbar.make(mDrawer, errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onProductSelected(long productDatabaseId) {
+        mPresenter.onProductSelected(productDatabaseId);
     }
 }

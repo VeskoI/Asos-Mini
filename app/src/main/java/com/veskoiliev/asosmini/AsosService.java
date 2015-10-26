@@ -1,6 +1,7 @@
 package com.veskoiliev.asosmini;
 
 import com.veskoiliev.asosmini.model.pojo.CategoriesListing;
+import com.veskoiliev.asosmini.model.pojo.ProductDetails;
 import com.veskoiliev.asosmini.model.pojo.ProductsListing;
 
 import retrofit.Call;
@@ -20,6 +21,9 @@ public interface AsosService {
 
     @GET("/u/1559445/ASOS/SampleApi/anycat_products.json")
     Call<ProductsListing> getProductsForCategory(@Query("catid") String categoryId);
+
+    @GET("u/1559445/ASOS/SampleApi/anyproduct_details.json")
+    Call<ProductDetails> getProductDetails(@Query("catid") String productId);
 
     class Factory {
         public static AsosService create() {

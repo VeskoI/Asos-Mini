@@ -11,7 +11,9 @@ import com.veskoiliev.asosmini.model.db.ContentProviderHelper;
 import com.veskoiliev.asosmini.model.pojo.CategoriesListing;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
+import com.veskoiliev.asosmini.model.pojo.ProductDetails;
 import com.veskoiliev.asosmini.model.pojo.ProductsListing;
+import com.veskoiliev.asosmini.ui.singleproduct.ProductLoadedListener;
 
 import java.util.List;
 
@@ -51,6 +53,28 @@ public class DataWrapperImpl implements DataWrapper {
         } else {
             fetchProducts(categoryDatabaseId, listener);
         }
+    }
+
+    @Override
+    public void loadProduct(long productId, final ProductLoadedListener listener) {
+        Call<ProductDetails> call = mNetworkService.getProductDetails(String.valueOf(productId));
+        call.enqueue(new Callback<ProductDetails>() {
+            @Override
+            public void onResponse(Response<ProductDetails> response, Retrofit retrofit) {
+                Log.d(TAG, "onResponse() called with: " + "response = [" + response + "], retrofit = [" + retrofit + "]");
+                if (response.isSuccess() && response.body() != null) {
+                    listener.onProductDetailsLoaded(response.body());
+                    return;
+                }
+
+                listener.onProductFailedToLoad(response.message());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                listener.onProductFailedToLoad(t.getMessage());
+            }
+        });
     }
 
     private void fetchProducts(final long categoryDatabaseId, final DataFetchedListener listener) {
@@ -136,8 +160,5 @@ public class DataWrapperImpl implements DataWrapper {
         });
     }
 
-    @Override
-    public Product getProduct(long productId) {
-        return null;
-    }
+
 }
