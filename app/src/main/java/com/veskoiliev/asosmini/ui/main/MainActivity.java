@@ -74,7 +74,8 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
 
 
-        // NavigationView - we need to add the Header manually to capture the Women/Men buttons.
+        // NavigationView - we need to add the Header manually to capture
+        // the Women/Men buttons and add some onClick listeners to them.
         mNavigationView.setNavigationItemSelectedListener(this);
         View headerView = LayoutInflater.from(this).inflate(R.layout.nav_header_main, mNavigationView, false);
 

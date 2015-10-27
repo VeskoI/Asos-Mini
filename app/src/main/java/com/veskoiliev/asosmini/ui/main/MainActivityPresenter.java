@@ -20,5 +20,9 @@ public interface MainActivityPresenter extends ActionBarPresenter {
 
     void onProductSelected(long productId);
 
+    /**
+     * TODO for the sake of this example we can only ADD items to favorites, but we cannot REMOVE them.
+     * @param productId external (non-database) productId to be added to favorites.
+     */
     void onProductToggleFavorites(long productId);
 }

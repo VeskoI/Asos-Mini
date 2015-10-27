@@ -15,6 +15,9 @@ import com.veskoiliev.asosmini.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * Simple fragment that holds a single image. Used in {@link GalleryAdapter}.
+ */
 public class ImageFragment extends Fragment {
 
     private static final String KEY_IMAGE_URL = "image_url";

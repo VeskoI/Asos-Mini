@@ -11,6 +11,11 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
+/**
+ * Network interface for communicating to ASOS server.
+ *
+ * NOTE: In this example it communicates to a fake Dropbox server.
+ */
 public interface AsosService {
 
     String GENDER_MEN = "men";
@@ -26,9 +31,11 @@ public interface AsosService {
     Call<ProductDetails> getProductDetails(@Query("catid") String productId);
 
     class Factory {
+        private static final String BASE_URL = "https://dl.dropboxusercontent.com/";
+
         public static AsosService create() {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://dl.dropboxusercontent.com/")
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             return retrofit.create(AsosService.class);

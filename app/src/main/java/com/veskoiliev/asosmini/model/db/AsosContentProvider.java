@@ -13,9 +13,14 @@ import android.text.TextUtils;
 
 import static com.veskoiliev.asosmini.model.db.Contract.AUTHORITY;
 
+/**
+ * This ContentProvider is NOT exported! It just wraps our {@link DbOpenHelper}.
+ *
+ * It's public contract is {@link Contract}.
+ */
 public class AsosContentProvider extends ContentProvider {
 
-    // Possible database paths
+    // Possible base database paths
     private static final String PATH_CATEGORY = Contract.Category.TABLE_NAME;
     private static final String PATH_PRODUCT = Contract.Product.TABLE_NAME;
     
@@ -26,10 +31,11 @@ public class AsosContentProvider extends ContentProvider {
     private static final int ID_CATEGORIES_WOMEN = 40;
     private static final int ID_PRODUCTS_ALL = 50;
     private static final int ID_PRODUCT_SINGLE = 60;
-
     private static final int ID_PRODUCTS_BY_CATEGORY = 70;
+
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
+    // Bind different PATHs to IDs.
     static {
         sUriMatcher.addURI(AUTHORITY, PATH_CATEGORY, ID_CATEGORIES_ALL);
         sUriMatcher.addURI(AUTHORITY, PATH_CATEGORY + "/#", ID_CATEGORY_SINGLE);
@@ -41,6 +47,9 @@ public class AsosContentProvider extends ContentProvider {
         sUriMatcher.addURI(AUTHORITY, PATH_PRODUCT + "/" + PATH_CATEGORY + "/#", ID_PRODUCTS_BY_CATEGORY);
     }
 
+
+    // Helper methods for building proper URIs to work with the ContentProvider.
+    // Ideally there must be one for each accepted path.
     public static Uri getUriCategories() {
         return Uri.parse("content://" + AUTHORITY + "/" + PATH_CATEGORY);
     }

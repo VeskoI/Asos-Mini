@@ -5,6 +5,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+/**
+ * This ItemDecoration is used to give the items in {@link MainActivity#mRecyclerView}
+ * some extra space.
+ *
+ * TODO give the yellow border to items in favorites as well.
+ */
 public class ProductsItemDecoration extends RecyclerView.ItemDecoration {
 
     private int mPaddingPx;

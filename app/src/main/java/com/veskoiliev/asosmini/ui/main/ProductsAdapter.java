@@ -51,6 +51,13 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
         return mData != null ? mData.size() : 0;
     }
 
+    /**
+     * Use this method to REPLACE the data in the adapter.
+     * It calls {@link #notifyDataSetChanged()} internally, so no extra work is required
+     * from the outside.
+     *
+     * @param data list of Products to added to the adapter.
+     */
     public void setData(@NonNull List<Product> data) {
         mData.clear();
         mData.addAll(data);

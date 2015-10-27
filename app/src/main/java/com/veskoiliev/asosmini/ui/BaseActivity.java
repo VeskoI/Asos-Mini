@@ -13,6 +13,9 @@ import java.util.Map;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    /**
+     * Since all Activities share the same ActionBar menu, we can just build it here.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -20,6 +23,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Display an {@link AlertDialog} with the favorites in the format:
+     * "id -> title".
+     *
+     * @param favorites to be displayed.
+     */
     protected void displayFavorites(HashMap<Long, Product> favorites) {
         StringBuilder message = new StringBuilder();
         message.append(getString(R.string.favorites_list)).append("\n");
@@ -30,6 +39,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         displayAlertDialog(message.toString());
     }
 
+    /**
+     * Display and {@link AlertDialog} with the shopping bag items in the format:
+     * "id -> count".
+     *
+     * @param bag of shopping items to be displayed.
+     */
     protected void displayBag(HashMap<Long, Integer> bag) {
         StringBuilder message = new StringBuilder();
         message.append(getString(R.string.bag_contents)).append("\n");

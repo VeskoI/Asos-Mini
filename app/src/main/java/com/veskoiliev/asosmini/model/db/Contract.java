@@ -2,6 +2,9 @@ package com.veskoiliev.asosmini.model.db;
 
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * This is the public contract used by {@link AsosContentProvider}.
+ */
 public class Contract {
 
     // ContentProvider authority

@@ -2,7 +2,7 @@ package com.veskoiliev.asosmini.model;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import com.veskoiliev.asosmini.AsosMiniApp;
 import com.veskoiliev.asosmini.AsosService;
@@ -25,8 +25,7 @@ import retrofit.Retrofit;
 
 public class DataWrapperImpl implements DataWrapper {
 
-    private static final String TAG = "vesko";
-
+    /** Initial local cache capacity. Minor optimization to ensure we don't create empty collections. */
     private static final int INITIAL_CAPACITY = 10;
 
     // For the sake of this example, let's keep Favorites and Bag only in memory.
@@ -62,13 +61,16 @@ public class DataWrapperImpl implements DataWrapper {
         }
     }
 
+    /**
+     * TODO 10/27/2015 Cutting some corners for the sake of this exercise - downloading the Product EVERY time.
+     * Instead we should insert downloaded ProductDetails in the database like we're doing for Categories.
+     */
     @Override
     public void loadProduct(long productId, final ProductLoadedListener listener) {
         Call<ProductDetails> call = mNetworkService.getProductDetails(String.valueOf(productId));
         call.enqueue(new Callback<ProductDetails>() {
             @Override
             public void onResponse(Response<ProductDetails> response, Retrofit retrofit) {
-                Log.d(TAG, "onResponse() called with: " + "response = [" + response + "], retrofit = [" + retrofit + "]");
                 if (response.isSuccess() && response.body() != null) {
                     listener.onProductDetailsLoaded(response.body());
                     return;
@@ -102,11 +104,13 @@ public class DataWrapperImpl implements DataWrapper {
         mBag.put(productId, newCount);
     }
 
+    @NonNull
     @Override
     public HashMap<Long, Product> getFavorites() {
         return mFavorites;
     }
 
+    @NonNull
     @Override
     public HashMap<Long, Integer> getBag() {
         return mBag;
@@ -138,8 +142,7 @@ public class DataWrapperImpl implements DataWrapper {
                             contentValues[i] = products.get(i).getContentValues();
                         }
 
-                        int rowsInserted = mContentResolver.bulkInsert(AsosContentProvider.getUriProducts(), contentValues);
-                        Log.d(TAG, "___ products inserted: " + rowsInserted);
+                        mContentResolver.bulkInsert(AsosContentProvider.getUriProducts(), contentValues);
 
                         listener.onProductsLoaded(products);
                         return;
@@ -178,8 +181,7 @@ public class DataWrapperImpl implements DataWrapper {
                             contentValues[i] = categories.get(i).getContentValues();
                         }
 
-                        int rowsInserted = mContentResolver.bulkInsert(AsosContentProvider.getUriCategories(), contentValues);
-                        Log.d(TAG, "___ categories inserted: " + rowsInserted);
+                        mContentResolver.bulkInsert(AsosContentProvider.getUriCategories(), contentValues);
 
                         listener.onCategoriesLoaded(categories);
                         return;

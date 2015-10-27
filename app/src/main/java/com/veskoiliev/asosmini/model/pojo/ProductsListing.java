@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * Used to deserialize the reponse from {@link com.veskoiliev.asosmini.AsosService#getProductDetails(String)}.
+ */
 public class ProductsListing {
 
     @SerializedName("ItemCount")

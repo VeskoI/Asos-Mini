@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,7 +24,6 @@ import butterknife.OnClick;
 public class SingleProductActivity extends BaseActivity implements SingleProductView {
 
     private static final String EXTRA_PRODUCT_ID = "PRODUCT_ID";
-    private static final String TAG = "vesko";
 
     public static Intent getStartIntent(Context context, long productId) {
         Intent intent = new Intent(context, SingleProductActivity.class);
@@ -63,6 +61,9 @@ public class SingleProductActivity extends BaseActivity implements SingleProduct
         }
 
         long productId = getIntent().getExtras().getLong(EXTRA_PRODUCT_ID);
+        if (productId <= 0) {
+            throw new IllegalArgumentException("No ProductId passed to SingleProductActivity!");
+        }
 
         mGalleryAdapter = new GalleryAdapter(getSupportFragmentManager());
         mGalleryPager.setAdapter(mGalleryAdapter);
@@ -99,7 +100,6 @@ public class SingleProductActivity extends BaseActivity implements SingleProduct
 
     @Override
     public void onProductLoaded(ProductDetails productDetails) {
-        Log.d(TAG, "SingleProductActivity, onProductLoaded: " + productDetails);
         mBrand.setText(productDetails.getBrand());
         mDescription.setText(productDetails.getDescription());
         mAddToBag.setText(getString(R.string.add_to_bag_with_price, productDetails.getCurrentPrice()));

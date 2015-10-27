@@ -4,8 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * Used to deserialize the response from {@link com.veskoiliev.asosmini.AsosService#getProductDetails(String)}.
+ *
+ * This object captures all possible info about a Product, so it has much more data than {@link Product},
+ * which is a much, much simpler.
+ */
 public class ProductDetails {
-
 
     @SerializedName("BasePrice")
     private double basePrice;
