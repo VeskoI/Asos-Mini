@@ -6,7 +6,7 @@ import com.veskoiliev.asosmini.ui.ActionBarPresenter;
 
 public interface MainActivityPresenter extends ActionBarPresenter {
 
-    void onCreate();
+    void onResume();
 
     void onMenuWomenClicked();
 

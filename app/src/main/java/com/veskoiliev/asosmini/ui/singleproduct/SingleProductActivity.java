@@ -81,6 +81,11 @@ public class SingleProductActivity extends BaseActivity implements SingleProduct
         } else if (id == R.id.action_bag) {
             mPresenter.onBagClicked();
             return true;
+        } else if (id == android.R.id.home) {
+            // No need to recreate the Parent activity,
+            // we can just finish this one and return to the parent.
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

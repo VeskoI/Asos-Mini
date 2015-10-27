@@ -1,14 +1,13 @@
 package com.veskoiliev.asosmini.ui.main;
 
 import android.os.Bundle;
-import android.util.Log;
 
-import com.veskoiliev.asosmini.model.Gender;
+import com.veskoiliev.asosmini.model.DataFetchedListener;
 import com.veskoiliev.asosmini.model.DataWrapper;
 import com.veskoiliev.asosmini.model.DataWrapperImpl;
+import com.veskoiliev.asosmini.model.Gender;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
-import com.veskoiliev.asosmini.model.DataFetchedListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +20,6 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
     private static final String KEY_SELECTED_GENDER = "SELECTED_GENDER";
     private static final String KEY_SELECTED_CATEGORY = "SELECTED_CATEGORY";
     private static final long NOT_SET = -1;
-
-    private static final String TAG = "vesko";
 
     private MainView mView;
     private DataWrapper mDataWrapper;
@@ -37,14 +34,16 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
     }
 
     @Override
-    public void onCreate() {
+    public void onResume() {
+        mView.toggleGenderButtons(mSelectedGender == MEN);
+
         loadCategories(mSelectedGender);
 
-        if (mSelectedCategory == 0) {
+        if (mSelectedCategory == NOT_SET) {
             mView.openDrawer();
+        } else {
+            onCategorySelected(mSelectedCategory);
         }
-
-        mView.toggleGenderButtons(mSelectedGender == MEN);
     }
 
     private void loadCategories(Gender gender) {
@@ -68,7 +67,6 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
     public void onMenuMenClicked() {
         if (mSelectedGender == MEN) {
             // We're already displaying those, nothing to do here.
-            Log.d(TAG, "onMenuMenClicked: ALREADY here");
             return;
         }
 
@@ -95,15 +93,6 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         mSelectedGender = (Gender) savedInstanceState.getSerializable(KEY_SELECTED_GENDER);
         mSelectedCategory = savedInstanceState.getLong(KEY_SELECTED_CATEGORY, NOT_SET);
-
-        boolean displayingMen = mSelectedGender == MEN;
-        mView.toggleGenderButtons(displayingMen);
-
-        loadCategories(mSelectedGender);
-
-        if (mSelectedCategory != NOT_SET) {
-            onCategorySelected(mSelectedCategory);
-        }
     }
 
     @Override

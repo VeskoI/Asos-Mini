@@ -57,12 +57,12 @@ public class MainActivity extends BaseActivity
         initViews();
 
         mPresenter = new MainActivityPresenterImpl(this);
+    }
 
-        // If we're creating the Activity from scratch we need to notify the presenter.
-        // Otherwise the onRestoreInstanceState() will handle the initialization.
-        if (savedInstanceState == null) {
-            mPresenter.onCreate();
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.onResume();
     }
 
     private void initViews() {
