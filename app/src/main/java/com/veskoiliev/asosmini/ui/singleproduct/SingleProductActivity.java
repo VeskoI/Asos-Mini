@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -33,6 +34,9 @@ public class SingleProductActivity extends BaseActivity implements SingleProduct
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+
+    @Bind(R.id.product_details_info_holder)
+    View mDetailsHolder;
 
     @Bind(R.id.product_details_gallery_pager)
     ViewPager mGalleryPager;
@@ -100,6 +104,7 @@ public class SingleProductActivity extends BaseActivity implements SingleProduct
 
     @Override
     public void onProductLoaded(ProductDetails productDetails) {
+        mDetailsHolder.setVisibility(View.VISIBLE);
         mBrand.setText(productDetails.getBrand());
         mDescription.setText(productDetails.getDescription());
         mAddToBag.setText(getString(R.string.add_to_bag_with_price, productDetails.getCurrentPrice()));
