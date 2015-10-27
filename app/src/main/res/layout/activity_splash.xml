@@ -7,10 +7,12 @@
     android:fitsSystemWindows="true"
     tools:context="com.veskoiliev.asosmini.ui.splash.SplashActivity">
 
+    <!-- we need this wrapper layout to center the logo & progressBar together -->
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        tools:ignore="UselessParent">
 
         <ImageView
             android:layout_width="wrap_content"

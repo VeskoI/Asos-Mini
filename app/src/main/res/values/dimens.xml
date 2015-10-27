@@ -8,7 +8,7 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="products_list_item_padding">16dp</dimen>
-    <dimen name="products_list_item_width">196dp</dimen>
+    <dimen name="products_list_item_width">128dp</dimen>
 
     <!-- TODO different sizes for bigger screens -->
     <dimen name="image_gallery_height">360dp</dimen>

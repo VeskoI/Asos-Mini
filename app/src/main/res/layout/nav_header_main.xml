@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
+    android:background="#DCEDC8"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -15,10 +15,12 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/cd_user_avatar"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@android:drawable/sym_def_app_icon" />
 
     <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -27,17 +29,19 @@
 
         <Button
             android:id="@+id/menu_btn_women"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Women" />
+            android:text="@string/women" />
 
         <Button
             android:id="@+id/menu_btn_men"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Men" />
+            android:text="@string/men" />
     </LinearLayout>
 
 </LinearLayout>

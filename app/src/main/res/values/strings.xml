@@ -1,18 +1,21 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
     <string name="app_name">AsosMini</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="cd_app_logo">ASOS logo</string>
-    <string name="title_activity_single_product">SingleProductActivity</string>
-
-    <string name="add_to_bag_with_price">Add to Bag (%1$s)</string>
     <string name="action_favorites">Favorites</string>
+    <string name="add_to_bag_with_price">Add to Bag (<xliff:g id="item_price" example="28.00 £">%1$s</xliff:g>)</string>
     <string name="bag">Shopping Bag</string>
     <string name="favorites_list">Favorites:</string>
     <string name="bag_contents">Your shopping bag:</string>
     <string name="added_to_bag">Product added to bag!</string>
     <string name="added_to_favorites">Added to favorites!</string>
+    <string name="women">Women</string>
+    <string name="men">Men</string>
+
+    <string name="cd_app_logo">ASOS logo</string>
+    <string name="cd_user_avatar">User profile image</string>
+    <string name="cd_gallery_image">Detailed image of this product</string>
+    <string name="cd_thumbnail">Small thumbnail of this product</string>
 </resources>
