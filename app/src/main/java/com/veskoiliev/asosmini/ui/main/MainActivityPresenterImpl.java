@@ -2,15 +2,17 @@ package com.veskoiliev.asosmini.ui.main;
 
 import android.os.Bundle;
 
+import com.veskoiliev.asosmini.dagger.Injector;
 import com.veskoiliev.asosmini.model.DataFetchedListener;
 import com.veskoiliev.asosmini.model.DataWrapper;
-import com.veskoiliev.asosmini.model.DataWrapperImpl;
 import com.veskoiliev.asosmini.model.Gender;
 import com.veskoiliev.asosmini.model.pojo.Category;
 import com.veskoiliev.asosmini.model.pojo.Product;
 
 import java.util.HashMap;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import static com.veskoiliev.asosmini.model.Gender.MEN;
 import static com.veskoiliev.asosmini.model.Gender.WOMEN;
@@ -21,15 +23,18 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, DataFet
     private static final String KEY_SELECTED_CATEGORY = "SELECTED_CATEGORY";
     private static final long NOT_SET = -1;
 
+    @Inject
+    DataWrapper mDataWrapper;
+
     private MainView mView;
-    private DataWrapper mDataWrapper;
 
     private long mSelectedCategory = NOT_SET;
     private Gender mSelectedGender;
 
     public MainActivityPresenterImpl(MainView mainView) {
+        Injector.getComponent().inject(this);
+
         mView = mainView;
-        mDataWrapper = new DataWrapperImpl();
         mSelectedGender = MEN;
     }
 

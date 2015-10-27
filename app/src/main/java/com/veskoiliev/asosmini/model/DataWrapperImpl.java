@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.veskoiliev.asosmini.AsosMiniApp;
 import com.veskoiliev.asosmini.AsosService;
+import com.veskoiliev.asosmini.dagger.Injector;
 import com.veskoiliev.asosmini.model.db.AsosContentProvider;
 import com.veskoiliev.asosmini.model.db.ContentProviderHelper;
 import com.veskoiliev.asosmini.model.pojo.CategoriesListing;
@@ -17,6 +18,8 @@ import com.veskoiliev.asosmini.ui.singleproduct.ProductLoadedListener;
 
 import java.util.HashMap;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -32,10 +35,14 @@ public class DataWrapperImpl implements DataWrapper {
     private static HashMap<Long, Product> mFavorites = new HashMap<>(INITIAL_CAPACITY);
     private static HashMap<Long, Integer> mBag = new HashMap<>(INITIAL_CAPACITY);
 
-    private ContentResolver mContentResolver;
-    private AsosService mNetworkService;
+    @Inject
+    ContentResolver mContentResolver;
+
+    @Inject
+    AsosService mNetworkService;
 
     public DataWrapperImpl() {
+        Injector.getComponent().inject(this);
         mContentResolver = AsosMiniApp.getInstance().getContentResolver();
         mNetworkService = AsosService.Factory.create();
     }

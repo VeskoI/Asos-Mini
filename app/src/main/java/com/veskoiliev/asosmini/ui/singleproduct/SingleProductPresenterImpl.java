@@ -1,22 +1,27 @@
 package com.veskoiliev.asosmini.ui.singleproduct;
 
+import com.veskoiliev.asosmini.dagger.Injector;
 import com.veskoiliev.asosmini.model.DataWrapper;
-import com.veskoiliev.asosmini.model.DataWrapperImpl;
 import com.veskoiliev.asosmini.model.pojo.Product;
 import com.veskoiliev.asosmini.model.pojo.ProductDetails;
 
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
 public class SingleProductPresenterImpl implements SingleProductPresenter, ProductLoadedListener {
 
-    private DataWrapper mDataWrapper;
+    @Inject
+    DataWrapper mDataWrapper;
+
     private SingleProductView mView;
 
     private ProductDetails mCurrentProduct;
 
     public SingleProductPresenterImpl(SingleProductView view) {
+        Injector.getComponent().inject(this);
+
         mView = view;
-        mDataWrapper = new DataWrapperImpl();
     }
 
     @Override
