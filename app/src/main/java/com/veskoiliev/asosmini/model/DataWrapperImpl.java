@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
-import com.veskoiliev.asosmini.AsosMiniApp;
 import com.veskoiliev.asosmini.AsosService;
 import com.veskoiliev.asosmini.dagger.Injector;
 import com.veskoiliev.asosmini.model.db.AsosContentProvider;
@@ -43,8 +42,6 @@ public class DataWrapperImpl implements DataWrapper {
 
     public DataWrapperImpl() {
         Injector.getComponent().inject(this);
-        mContentResolver = AsosMiniApp.getInstance().getContentResolver();
-        mNetworkService = AsosService.Factory.create();
     }
 
     @Override
